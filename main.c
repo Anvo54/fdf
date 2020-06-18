@@ -16,13 +16,16 @@
 int main(int argc, char **argv)
 {
 	mlx_data_t data;
+	map_t **map;
 	if ((data.mlx_ptr = mlx_init()) == NULL)
 		return (-1);
 	if ((data.mlx_win = mlx_new_window(data.mlx_ptr, 400, 300, "The window!")) == NULL)
 		return (-1);
 	/* Lines below for testing */
 	int fd;
-	char **char_map;
+	fd = open(argv[1], O_RDONLY);
+	read_map(fd, map);
+/* 	char **char_map;
 	char **tmp;
 	int i = 0;
 	int j;
@@ -65,7 +68,7 @@ int main(int argc, char **argv)
 		}
 		free(char_map);
 		print_map(mapv3d, x, i, data);
-	}
+	} */
 	mlx_key_hook(data.mlx_win, deal_key, &data);
 	mlx_loop(data.mlx_ptr);
 

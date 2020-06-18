@@ -42,5 +42,5 @@ typedef struct			map_s
 int			deal_key(int key, mlx_data_t *data);
 void		draw(int x0, int y0, int x1, int y1, mlx_data_t *data);
 int			print_map(map_t **map, int maxX ,int maxY, mlx_data_t data);
-
+int			read_map(int fd, map_t **map);
 #endif

@@ -1,39 +1,49 @@
-/* READMAP */
-
-/* 
-
-Funktio palauttaa map_t arrayn
-Funktio saa parametrikseen filedescriptorin ja pointerin map_t arrayhin
-
-
-
- */
-
 #include "../fdf.h"
 
-map_t		**read_map(int fd)
+coords_t *convert_to_coords(char **line, int y)
 {
 	int i;
-	int x;
-	int y;
-	char **charmap;
-	char **tmp;
-	map_t **result;
+	int j;
+	coords_t *map_line;
 
 	i = 0;
-	charmap = (char**)malloc(sizeof(charmap)*BUFFER);
-	while (get_next_line(fd, &charmap[i]))
+	j = 0;
+	while (line[i])
 		i++;
-	charmap[i] = 0;
-	x = ft_count_char(charmap[0], ' ');
-	y = i;
-	if (!(result = (map_t**)malloc(sizeof(map_t) * y)))
-		return(0);
-	i = 0;
-	while (charmap[i])
+	map_line = (coords_t*)malloc(i * sizeof(coords_t));
+	while (j < i)
 	{
-		tmp = ft_strsplit(charmap[i]);
-		while(tmp[])
+		map_line[j].y = y * 5;
+		map_line[j].x = j * 5;
+		map_line[j].z = ft_atoi(line[j]);
+		free(line[j]);
+		j++;
 	}
-	return(i);
+	free(line);
+	return(map_line);
+}
+
+coords_t		**read_coords(int fd, int *maxX, int *maxY)
+{
+	coords_t **map;
+	char **charmap;
+	int y;
+	int i;
+
+	y = 0;
+	i = 0;
+	charmap = (char**)malloc(sizeof(char*) *BUFFER);
+	while (get_next_line(fd, &charmap[y]))
+		y++;
+	*maxY = y;
+	*maxX = ft_count_char(charmap[0],' ');
+	map = (coords_t**)malloc(y * sizeof(coords_t*));
+	while(i < y)
+	{
+		map[i] = convert_to_coords(ft_strsplit(charmap[i], ' '), i);
+		free(charmap[i]);
+		i++;
+	}
+	free(charmap);
+	return(map);
 }

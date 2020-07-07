@@ -1,24 +1,25 @@
 #include "../fdf.h"
 
-int print_map(map_t **map, int maxX ,int maxY, mlx_data_t data)
-{
-	int y;
-	int x;
-	int scale = 5;
 
-	y = 0;
-	x = 0;
-	
-/* 	while (y < maxY)
+int print_map(map_t *map, mlx_data_t data)
+{
+	int i;
+	int j;
+
+	j = 0;
+	i = 0;
+	while(i <= map->height)
 	{
-		while (x < maxX)
+		j = 0;
+		while (j <= map->width)
 		{
-			if (x != maxX - 1)
-				draw(map[y][x].x * scale, map[y][x].y * scale,map[y][x + 1].x * scale, map[y][x].y * scale, &data);
-			x++;
+			if (j != map->width)
+				draw(map->coords[i][j].x, map->coords[i][j].y, map->coords[i][j + 1].x, map->coords[i][j].y - map->coords[i][j].z, &data);
+			if (i != map->height)
+				draw(map->coords[i][j].x, map->coords[i][j].y - map->coords[i][j].z, map->coords[i][j].x, map->coords[i + 1][j].y, &data);
+			j++;
 		}
-		x = 0;
-		y++;
-	} */
+		i++;
+	}
 	return(0);
 }

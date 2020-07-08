@@ -1,4 +1,5 @@
-#include "../fdf.h"
+#include	"../fdf.h"
+#include	"../libft/libft.h"
 
 coords_t *convert_to_coords(char **line, int y)
 {

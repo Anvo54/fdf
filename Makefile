@@ -11,14 +11,14 @@
 # **************************************************************************** #
 
 NAME = fdf
-LIB = libft/libft.a
+LIB = libft/libft.a 
 CFLAGS = -g
 SRCS = main.c src/keyinput.c src/draw.c src/print_map.c src/readmap.c src/create_map.c
 
 OBJ = $(SRCS:.c=.o)
 
 GCC = gcc -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext
-LIBXL = -lm -L libft/ -lft -L/usr/lib/X11 -lmlx -lXext -lX11
+LIBXL = libmlx_Linux.a -lm -lX11 -lXext
 
 all: $(NAME)
 
@@ -27,8 +27,8 @@ $(NAME): buildlib
 
 linux: buildlib
 	@echo "Creating LINUX executable $(NAME) ..."
-	@gcc $(CFLAGS) -c $(SRCS)
-	@gcc -o $(NAME) $(OBJ) $(LIBXL)
+	@gcc $(CFLAGS) $(SRCS) $(LIB) $(LIBXL) -o $(NAME)  
+	
 
 x11: buildlib
 	@echo "Creating X11 executable $(NAME)..."

@@ -14,9 +14,9 @@ int print_map(map_t *map, mlx_data_t data)
 		while (j <= map->width)
 		{
 			if (j != map->width)
-				draw(map->coords[i][j].x, map->coords[i][j].y, map->coords[i][j + 1].x, map->coords[i][j].y - map->coords[i][j].z, &data);
+				draw(map->coords[i][j].x, map->coords[i][j].y, map->coords[i][j + 1].x, map->coords[i][j].y, &data);
 			if (i != map->height)
-				draw(map->coords[i][j].x, map->coords[i][j].y - map->coords[i][j].z, map->coords[i][j].x, map->coords[i + 1][j].y, &data);
+				draw(map->coords[i][j].x, map->coords[i][j].y, map->coords[i][j].x, map->coords[i + 1][j].y, &data);
 			j++;
 		}
 		i++;

@@ -14,9 +14,10 @@ coords_t *convert_to_coords(char **line, int y)
 	map_line = (coords_t*)malloc(i * sizeof(coords_t));
 	while (j < i)
 	{
-		map_line[j].y = y * 5;
-		map_line[j].x = j * 5;
+		map_line[j].y = y * 10;
+		map_line[j].x = j * 10;
 		map_line[j].z = ft_atoi(line[j]);
+		map_line[j].color = 0xffffff;
 		free(line[j]);
 		j++;
 	}

@@ -12,7 +12,7 @@ void		draw(int x0, int y0, int x1, int y1, mlx_data_t *data)
 	line.e2 = 0;
 	while (!(x0 == x1 && y0 == y1))
 	{
-		mlx_pixel_put(data->mlx_ptr, data->mlx_win, x0, y0, 0xffffff);
+		mlx_pixel_put(data->mlx_ptr, data->mlx_win, x0, y0, data->map->coords[0][0].color);
 		line.e2 = 2*line.error;
 		if (line.e2 >= line.dy)
 		{

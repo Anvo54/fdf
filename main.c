@@ -21,9 +21,11 @@ int main(int argc, char **argv)
 
 	fd = open(argv[1], O_RDONLY);
 	kartta = create_map(fd);
+	data.width = 800;
+	data.height = 600;
 	if ((data.mlx_ptr = mlx_init()) == (void *)0)
 		exit(0);
-	if ((data.mlx_win = mlx_new_window(data.mlx_ptr, 400, 300, "The window!")) == NULL)
+	if ((data.mlx_win = mlx_new_window(data.mlx_ptr, data.width , data.height, "FDF Hive")) == NULL)
 		return (-1);
 	data.map = kartta;
 	close(fd);

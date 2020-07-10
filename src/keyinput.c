@@ -119,17 +119,17 @@ void testf(map_t *kartta){
 int		deal_key(int key, mlx_data_t *data)
 {
 	mlx_data_t data_new = *data;
-
+	ft_putnbr(key);
 	if (key == 65307 || key == 53)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->mlx_win);
 		exit(0);
 	}
-	if (key == 65451 || key == 65453)
+	if (key == 65451 || key == 65453 || key == 120 || key == 122)
 	{
-		if (key == 65451)
+		if (key == 65451 || key == 120 )
 			zoom(data->map, key);
-		if (key == 65453)
+		if (key == 65453 || key == 122)
 			zoomout(data->map);
 		mlx_clear_window(data->mlx_ptr, data->mlx_win);
 		print_map(data->map, data_new);

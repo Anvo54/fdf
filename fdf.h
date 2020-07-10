@@ -22,6 +22,8 @@ typedef struct			mlx_data_s
 	void				*mlx_ptr;
 	void				*mlx_win;
 	map_t				*map;
+	int					height;
+	int					width;
 }						mlx_data_t;
 
 typedef struct			line_s

@@ -13,9 +13,9 @@ void zoom(map_t *map, int key)
 		j = 0;
 		while (j <= map->width)
 		{
-			map->coords[i][j].x *= 1.20;
-			map->coords[i][j].y *= 1.20;
-			map->coords[i][j].z *= 1.20;
+			map->coords[i][j].x *= 2;
+			map->coords[i][j].y *= 2;
+			map->coords[i][j].z *= 2;
 			j++;
 		}
 		i++;
@@ -35,9 +35,9 @@ void zoomout(map_t *map)
 		j = 0;
 		while (j <= map->width)
 		{
-			map->coords[i][j].x /= 1.20;
-			map->coords[i][j].y /= 1.20;
-			map->coords[i][j].z /= 1.20;
+			map->coords[i][j].x /= 2;
+			map->coords[i][j].y /= 2;
+			map->coords[i][j].z /= 2;
 			j++;
 		}
 		i++;
@@ -48,20 +48,29 @@ void translate(map_t *map, int key)
 {
 	int i;
 	int j;
-	
+	int val;
+
 	i = 0;
 	j = 0;
+	if (key == 100 || key == 115)
+		val = 10;
+	if (key == 97 || key == 119)
+		val = -10;
 	while (i <= map->height)
 	{
 		j = 0;
 		while (j <= map->width)
 		{
-			map->coords[i][j].x += 10;
+			if (key == 100 || key == 97)
+				map->coords[i][j].x += val;
+			if (key == 119 || key == 115)
+				map->coords[i][j].y += val;
 			j++;
 		}
 		i++;
 	}
 }
+
 void	iso(int *x, int *y, int z)
 {
 	int previous_x;
@@ -111,7 +120,7 @@ int		deal_key(int key, mlx_data_t *data)
 		mlx_clear_window(data->mlx_ptr, data->mlx_win);
 		print_map(data->map, data_new);
 	}
-	if (key == 100)
+	if (key == 100 || key == 97 || key == 115 || key == 119)
 	{
 		translate(data->map, key);
 		mlx_clear_window(data->mlx_ptr, data->mlx_win);
@@ -126,10 +135,6 @@ int		deal_key(int key, mlx_data_t *data)
 			print_map(data->map, data_new);
 			data->project = isometric;
 		}
-	}
-	if (key == 115)
-	{
-		translate(data->map, key);
 	}
 	return(1);
 }

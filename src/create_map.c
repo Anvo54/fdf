@@ -7,8 +7,8 @@ map_t		*create_map(int fd)
 	map_t  *kartta;
 	coords_t **coords;
 
-	coords = read_coords(fd, &maxX, &maxY);
 	kartta = (map_t*)ft_memalloc(sizeof(map_t));
+	coords = read_coords(fd, &maxX, &maxY);
 	kartta->coords = coords;
 	kartta->height = maxY -1;
 	kartta->width = maxX;

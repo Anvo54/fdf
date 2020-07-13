@@ -27,6 +27,7 @@ int main(int argc, char **argv)
 		exit(0);
 	if ((data.mlx_win = mlx_new_window(data.mlx_ptr, data.width , data.height, "FDF Hive")) == NULL)
 		return (-1);
+	data.project = cartesian;
 	data.map = kartta;
 	close(fd);
 	mlx_key_hook(data.mlx_win, deal_key, &data);

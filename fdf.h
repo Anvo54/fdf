@@ -2,6 +2,12 @@
 # define FDF_H
 # define BUFFER 4096
 
+typedef					enum
+{
+	isometric,
+	cartesian,
+}						projection_t;
+
 typedef struct			coords_s
 {
 	int					x;
@@ -22,8 +28,11 @@ typedef struct			mlx_data_s
 	void				*mlx_ptr;
 	void				*mlx_win;
 	map_t				*map;
+	projection_t		project;
 	int					height;
 	int					width;
+	int					high;
+	int					low;
 }						mlx_data_t;
 
 typedef struct			line_s

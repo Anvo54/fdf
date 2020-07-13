@@ -93,29 +93,6 @@ void turniso(map_t *map)
 	}
 }
 
-void testf(map_t *kartta){
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	int test = (kartta->width / 2);
-	int test2 = (kartta->height / 2);
-	while (i <= kartta->height)
-	{
-		j = 0;
-		while (j <= kartta->width)
-		{
-			kartta->coords[i][j].x -= test;
-			kartta->coords[i][j].y -= test2;
-			j++;
-		}
-		i++;
-	}
-	
-}
-
-
 int		deal_key(int key, mlx_data_t *data)
 {
 	mlx_data_t data_new = *data;
@@ -141,14 +118,18 @@ int		deal_key(int key, mlx_data_t *data)
 		print_map(data->map, data_new);
 	}
 
-	if (key == 97){
-		turniso(data->map);
-		mlx_clear_window(data->mlx_ptr, data->mlx_win);
-		print_map(data->map, data_new);
+	if (key == 113){
+		if (data->project != isometric)
+		{
+			turniso(data->map);
+			mlx_clear_window(data->mlx_ptr, data->mlx_win);
+			print_map(data->map, data_new);
+			data->project = isometric;
+		}
 	}
 	if (key == 115)
 	{
-		testf(data->map);
+		translate(data->map, key);
 	}
 	return(1);
 }

@@ -17,7 +17,7 @@ SRCS = main.c src/keyinput.c src/draw.c src/print_map.c src/readmap.c src/create
 
 OBJ = $(SRCS:.c=.o)
 
-GCC = gcc -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext
+GCC = gcc -I /usr/X11/include -g -O3 -L /usr/X11/lib -lX11 -lmlx -lXext
 LIBXL = libmlx_Linux.a -lm -lX11 -lXext
 
 all: $(NAME)

@@ -1,7 +1,7 @@
 #include	"../fdf.h"
 #include	"../libft/libft.h"
 
-coords_t *convert_to_coords(char **line, int y)
+coords_t *convert_to_coords(char **line, int y, int maxY)
 {
 	int i;
 	int j;
@@ -42,7 +42,7 @@ coords_t		**read_coords(int fd, int *maxX, int *maxY)
 	map = (coords_t**)malloc(y * sizeof(coords_t*));
 	while(i < y)
 	{
-		map[i] = convert_to_coords(ft_strsplit(charmap[i], ' '), i);
+		map[i] = convert_to_coords(ft_strsplit(charmap[i], ' '), i, *maxY);
 		free(charmap[i]);
 		i++;
 	}

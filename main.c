@@ -12,13 +12,11 @@
 
 #include "fdf.h"
 
-
 int main(int argc, char **argv)
 {
 	mlx_data_t data;
 	map_t *kartta;
 	int fd;
-
 	fd = open(argv[1], O_RDONLY);
 	kartta = create_map(fd);
 	data.width = 800;
@@ -29,10 +27,12 @@ int main(int argc, char **argv)
 		return (-1);
 	data.project = cartesian;
 	data.map = kartta;
+	data.img_ptr = mlx_new_image(data.mlx_ptr, data.width, data.height);
+	data.img_data = mlx_get_data_addr(data.img_ptr, &(data.bpp), &(data.size_line), &(data.endian));
+	data.zoom = 1;
 	close(fd);
 	mlx_key_hook(data.mlx_win, deal_key, &data);
 	print_map(data.map, data);
 	mlx_loop(data.mlx_ptr);
-	
 	return(0);
 }

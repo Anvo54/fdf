@@ -1,0 +1,5 @@
+
+Todo:
+  ✔ Fix segfault on image zoom @started(20-07-20 20:16) @done(20-07-20 20:16) @lasted(47s)
+  ☐ (Prototype) Have all the values in struct. Zoom, etc. @started(20-07-20 20:27)
+  ☐ Make a projector that will use original map info and modified zoom, isomertic etc info

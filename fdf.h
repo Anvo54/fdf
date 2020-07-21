@@ -16,6 +16,15 @@ typedef struct			coords_s
 	int					color;
 }						coords_t;
 
+typedef	struct			point_s
+{
+	int					x;
+	int					y;
+	int					z;
+	int					color;
+}						point_t;
+
+
 typedef struct			map_s
 {
 	int					width;
@@ -27,12 +36,16 @@ typedef struct			mlx_data_s
 {
 	void				*mlx_ptr;
 	void				*mlx_win;
+	void				*img_ptr;
+	char				*img_data;
 	map_t				*map;
 	projection_t		project;
 	int					height;
 	int					width;
-	int					high;
-	int					low;
+	int					bpp;
+	int					size_line;
+	int					endian;
+	double				zoom;
 }						mlx_data_t;
 
 typedef struct			line_s

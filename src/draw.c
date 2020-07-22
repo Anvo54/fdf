@@ -11,31 +11,31 @@ void	add_pixel(mlx_data_t *fdf, int x, int y, int color)
 		fdf->img_data[++i] = color >> 16;
 	}
 }
-void		draw(int x0, int y0, int x1, int y1, mlx_data_t *data)
+void		draw(coords_t p1, coords_t p2, mlx_data_t *data)
 {
 	line_t	line;
 
-	int color = mlx_get_color_value(data->mlx_ptr, 0xFFFFFF);
+	int color = 0x4287f5;
 
-	line.dx = ft_abs(x1 - x0);
-	line.sx = x0 < x1 ? 1 : -1;
-	line.dy = -ft_abs(y1 - y0);
-	line.sy = y0 < y1 ? 1 : -1;
+	line.dx = ft_abs(p1.x - p2.x);
+	line.sx = p1.x < p2.x ? 1 : -1;
+	line.dy = -ft_abs(p1.y - p2.y);
+	line.sy = p1.y < p2.y ? 1 : -1;
 	line.error = line.dx+line.dy;
 	line.e2 = 0;
-	while (!(x0 == x1 && y0 == y1))
+	while (!(p1.x == p2.x && p1.y == p2.y))
 	{
-		add_pixel(data, x0, y0, color);
+		add_pixel(data, p1.x, p1.y, 0xFFFFFF);
 		line.e2 = 2*line.error;
 		if (line.e2 >= line.dy)
 		{
 			line.error += line.dy;
-			x0 += line.sx;
+			p1.x += line.sx;
 		}
 		if (line.e2 <= line.dx)
 		{
 			line.error += line.dx;
-			y0 += line.sy;
+			p1.y += line.sy;
 		}
 	}
 }

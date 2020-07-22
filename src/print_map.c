@@ -1,18 +1,37 @@
 #include "../fdf.h"
 
-void render(point_t *point, mlx_data_t *data)
+void	iso(int *x, int *y, int z)
 {
+	int previous_x;
+	int previous_y;
+
+	previous_x = *x;
+	previous_y = *y;
+	*x = (previous_x - previous_y) * cos(0.523599);
+	*y = -z + (previous_x + previous_y) * sin(0.523599);
+}
+
+void render(coords_t *point, mlx_data_t *data, coords_t cord)
+{
+	point->x = cord.x;
+	point->z = cord.z;
+	point->y = cord.y;
 	point->x *= data->zoom;
 	point->y *= data->zoom;
 	point->z *= data->zoom;
+	point->x += data->translate_x;
+	point->y += data->translate_y;
+	point->z += (point->z != 0) ? data->z_height: 0;
+	if (data->project == isometric)
+		iso(&point->x, &point->y, point->z);
 }
 
 int print_map(map_t *map, mlx_data_t data)
 {
 	int i;
 	int j;
-	point_t tmp;
-	point_t tmp1;
+	coords_t tmp;
+	coords_t tmp1;
 
 	j = 0;
 	i = 0;
@@ -23,30 +42,16 @@ int print_map(map_t *map, mlx_data_t data)
 		{
 			if (j != map->width)
 			{
-				tmp.x = map->coords[i][j].x;
-				tmp.y = map->coords[i][j].y;
-				tmp.z = map->coords[i][j].z;
-				tmp1.x = map->coords[i][j + 1].x;
-				tmp1.y = map->coords[i][j + 1].y;
-				tmp1.z = map->coords[i][j + 1].z;
-				render(&tmp, &data);
-				render(&tmp1, &data);
-				draw(tmp.x, tmp.y, tmp1.x, tmp1.y, &data);
+				render(&tmp, &data, map->coords[i][j]);
+				render(&tmp1, &data, map->coords[i][j + 1]);
+				draw(tmp, tmp1, &data);
 			}
-			//	draw(map->coords[i][j].x, map->coords[i][j].y, map->coords[i][j + 1].x, map->coords[i][j + 1].y, &data);
 			if (i != map->height)
 			{
-				tmp.x = map->coords[i][j].x;
-				tmp.y = map->coords[i][j].y;
-				tmp.z = map->coords[i][j].z;
-				tmp1.x = map->coords[i + 1][j].x;
-				tmp1.y = map->coords[i + 1][j].y;
-				tmp1.z = map->coords[i + 1][j].z;
-				render(&tmp, &data);
-				render(&tmp1, &data);
-				draw(tmp.x, tmp.y, tmp1.x, tmp1.y, &data);
+				render(&tmp, &data, map->coords[i][j]);
+				render(&tmp1, &data, map->coords[i + 1][j]);
+				draw(tmp, tmp1, &data);
 			}
-			//	draw(map->coords[i][j].x, map->coords[i][j].y, map->coords[i + 1][j].x, map->coords[i + 1][j].y, &data);
 			j++;
 		}
 		i++;

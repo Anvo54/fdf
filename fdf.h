@@ -16,15 +16,6 @@ typedef struct			coords_s
 	int					color;
 }						coords_t;
 
-typedef	struct			point_s
-{
-	int					x;
-	int					y;
-	int					z;
-	int					color;
-}						point_t;
-
-
 typedef struct			map_s
 {
 	int					width;
@@ -46,6 +37,9 @@ typedef struct			mlx_data_s
 	int					size_line;
 	int					endian;
 	double				zoom;
+	int					translate_x;
+	int					translate_y;
+	double				z_height;
 }						mlx_data_t;
 
 typedef struct			line_s
@@ -56,10 +50,8 @@ typedef struct			line_s
 	int					sy;
 	int					error;
 	int					e2;
+	int					color;
 }						line_t;
-
-
-
 
 #include	"mlx.h"
 #include	<stdlib.h>
@@ -72,7 +64,7 @@ typedef struct			line_s
 #include <stdio.h>
 
 int			deal_key(int key, mlx_data_t *data);
-void		draw(int x0, int y0, int x1, int y1, mlx_data_t *data);
+void		draw(coords_t p1, coords_t p2, mlx_data_t *data);
 int			print_map(map_t *map, mlx_data_t data);
 coords_t	**read_coords(int fd, int *maxX, int *maxY);
 map_t		*create_map(int fd);

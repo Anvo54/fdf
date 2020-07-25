@@ -25,9 +25,11 @@ void fromat_data(mlx_data_t *data, map_t *kartta)
 	data->img_ptr = mlx_new_image(data->mlx_ptr, data->width, data->height);
 	data->img_data = mlx_get_data_addr(data->img_ptr, &(data->bpp), &(data->size_line), &(data->endian));
 	data->zoom = 1;
-	data->translate_x = 0;
-	data->translate_y = 0;
+	data->translate_x = data->width / 2;
+	data->translate_y = data->height / 2;
 	data->z_height = 0;
+	data->rotate_x = 0;
+	data->rotate_y = 0;
 }
 
 int main(int argc, char **argv)
@@ -36,7 +38,7 @@ int main(int argc, char **argv)
 	map_t *kartta;
 	int fd;
 	fd = open(argv[1], O_RDONLY);
-	kartta = create_map(fd);
+	kartta = create_map(fd, &data);
 	fromat_data(&data, kartta);
 	close(fd);
 	mlx_key_hook(data.mlx_win, deal_key, &data);

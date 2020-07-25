@@ -13,6 +13,18 @@ void zoom(mlx_data_t *data, int key)
 		data->zoom *= 0.8;
 }
 
+void	rotate_map(mlx_data_t *data, int key)
+{
+	if (key == 65362)
+		data->rotate_x += 0.05;
+	if (key == 65364)
+		data->rotate_x -= 0.05;
+	if (key == 65361)
+		data->rotate_y += 0.05;
+	if (key == 65363)
+		data->rotate_y -= 0.05;
+}
+
 void translate(mlx_data_t *data, int key)
 {
 	int val;
@@ -66,6 +78,12 @@ int		deal_key(int key, mlx_data_t *data)
 	if (key == 114 || key == 101)
 	{
 		data->z_height += (key == 101) ? -5 : 5;
+		empty_image(data);
+		print_map(data->map, *data);
+	}
+	if (key == 65362 || key == 65364 || key == 65361 || key == 65363)
+	{
+		rotate_map(data, key);
 		empty_image(data);
 		print_map(data->map, *data);
 	}

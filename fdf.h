@@ -73,4 +73,8 @@ void		draw(coords_t p1, coords_t p2, mlx_data_t *data);
 int			print_map(map_t *map, mlx_data_t data);
 coords_t	**read_coords(int fd, int *maxX, int *maxY, mlx_data_t *data);
 map_t		*create_map(int fd, mlx_data_t *data);
+double		percent(int start, int end, int current);
+int			get_light(int start, int end, double percentage);
+int			point_color(int minz, int maxz, int curz);
+int			get_color(coords_t current, coords_t start, coords_t end, line_t delta);
 #endif

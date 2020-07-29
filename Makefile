@@ -13,7 +13,7 @@
 NAME = fdf
 LIB = libft/libft.a 
 CFLAGS = -g
-SRCS = main.c src/keyinput.c src/draw.c src/print_map.c src/readmap.c src/create_map.c
+SRCS = main.c src/keyinput.c src/draw.c src/print_map.c src/readmap.c src/create_map.c src/color.c
 
 OBJ = $(SRCS:.c=.o)
 

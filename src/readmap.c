@@ -1,6 +1,15 @@
 #include	"../fdf.h"
 #include	"../libft/libft.h"
 
+void	get_z_value(coords_t *coord, char *val, mlx_data_t *data)
+{
+	char **str = ft_strsplit(val, ',');
+	coord->z = ft_atoi(str[0]);
+	coord->color = (str[1]) ? ft_hextoint(str[1]): -1;
+	data->min = (data->min > coord->z) ? coord->z : data->min;
+	data->max = (data->max < coord->z) ? coord->z : data->max;
+}
+
 coords_t *convert_to_coords(char **line, int y, mlx_data_t *data)
 {
 	int i;
@@ -9,8 +18,6 @@ coords_t *convert_to_coords(char **line, int y, mlx_data_t *data)
 
 	i = 0;
 	j = 0;
-	data->min = ft_atoi(line[i]);
-	data->max = ft_atoi(line[i]);
 	while (line[i])
 		i++;
 	map_line = (coords_t*)malloc(i * sizeof(coords_t));
@@ -18,11 +25,7 @@ coords_t *convert_to_coords(char **line, int y, mlx_data_t *data)
 	{
 		map_line[j].y = y * 10;
 		map_line[j].x = (j - ((i - 1) / 2)) * 10;
-		map_line[j].z = ft_atoi(line[j]);
-		data->min = (data->min > map_line[j].z) ? map_line[j].z : data->min;
-		data->max = (data->max < map_line[j].z) ? map_line[j].z : data->max;
-		map_line[j].color = 0xffffff;
-		free(line[j]);
+		get_z_value(&map_line[j], line[j], data);
 		j++;
 	}
 	free(line);

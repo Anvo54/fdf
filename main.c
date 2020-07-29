@@ -27,9 +27,10 @@ void fromat_data(mlx_data_t *data, map_t *kartta)
 	data->zoom = 1;
 	data->translate_x = data->width / 2;
 	data->translate_y = data->height / 2;
-	data->z_height = 0;
+	data->z_height = 1;
 	data->rotate_x = 0;
 	data->rotate_y = 0;
+	data->rotate_z = 0;
 }
 
 int main(int argc, char **argv)

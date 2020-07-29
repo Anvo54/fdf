@@ -73,6 +73,8 @@ void				ft_strdel(char **as);
 void				*ft_memalloc(size_t size);
 char				*ft_strnew(size_t size);
 char				*ft_itoa(int n);
+char				*ft_itoa_base(int value, int base);
+int					ft_hextoint(char *s);
 void				ft_putnbr_fd(int n, int fd);
 char				*ft_strncpy(char *dst, const char *src, size_t len);
 size_t				ft_strlen(char const *s);

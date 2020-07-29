@@ -22,6 +22,17 @@ void	rotate_x(int x, int *y, int *z, mlx_data_t *data)
 	*z = -previous_y * sin(data->rotate_x) + previous_z * cos(data->rotate_x);
 }
 
+void	rotate_z(int *x, int *y, int z, mlx_data_t *data)
+{
+	int previous_x;
+	int previous_y;
+
+	previous_x = *x;
+	previous_y = *y;
+	*x = previous_x * cos(data->rotate_z) - previous_y * sin(data->rotate_z);
+	*y = previous_x * sin(data->rotate_z) + previous_y * cos(data->rotate_z);
+}
+
 void	rotate_y(int *x, int y, int *z, mlx_data_t *data)
 {
 	int previous_x;
@@ -36,13 +47,14 @@ void render(coords_t *point, mlx_data_t *data, coords_t cord)
 	point->x = cord.x;
 	point->z = cord.z;
 	point->y = cord.y;
+	point->z *= (point->z != data->min) ? data->z_height: 0;
+	point->color = point_color(data->min, data->max, point->z);
 	point->x *= data->zoom;
 	point->y *= data->zoom;
 	point->z *= data->zoom;
-	point->z += (point->z != data->min) ? data->z_height: 0;
-	point->color = (point->z <= data->min) ? 0xebdf34: 0xeb4034;
 	rotate_x(point->x, &point->y, &point->z, data);
 	rotate_y(&point->x, point->y, &point->z, data);
+	rotate_z(&point->x, &point->y, point->z, data);
 	if (data->project == isometric)
 		iso(&point->x, &point->y, point->z);
 	point->x += data->translate_x;
@@ -56,7 +68,6 @@ int print_map(map_t *map, mlx_data_t data)
 	coords_t tmp;
 	coords_t tmp1;
 
-	j = 0;
 	i = 0;
 	while(i <= map->height)
 	{

@@ -29,7 +29,7 @@ void	rotate_z(int *x, int *y, int z, mlx_data_t *data)
 
 	previous_x = *x;
 	previous_y = *y;
-	*x = previous_x * cos(data->rotate_z) - previous_y * sin(data->rotate_z);
+	*x = previous_x * cos(data->rotate_z) + -previous_y * sin(data->rotate_z);
 	*y = previous_x * sin(data->rotate_z) + previous_y * cos(data->rotate_z);
 }
 

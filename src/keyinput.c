@@ -16,16 +16,16 @@ void zoom(mlx_data_t *data, int key)
 void	rotate_map(mlx_data_t *data, int key)
 {
 	if (key == 65362)
-		data->rotate_x += 0.05;
-	if (key == 65364)
 		data->rotate_x -= 0.05;
-	if (key == 65361)
+	if (key == 65364)
+		data->rotate_x += 0.05;
+	if (key == 44)
+		data->rotate_y -= 0.05;
+	if (key == 46)
 		data->rotate_y += 0.05;
 	if (key == 65363)
-		data->rotate_y -= 0.05;
-	if (key == 44)
 		data->rotate_z += 0.05;
-	if (key == 46)
+	if (key == 65361)
 		data->rotate_z -= 0.05;
 }
 

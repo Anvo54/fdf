@@ -1,11 +1,9 @@
 #include "../fdf.h"
 
-
-
 void	add_pixel(mlx_data_t *fdf, int x, int y, int color)
 {
 	int		i;
-	if (x < fdf->width && y < fdf->height)
+	if (x <= fdf->width && x >= 0 && y <= fdf->height && y >= 0)
 	{
 		i = (x * fdf->bpp / 8) + (y * fdf->size_line);
 		fdf->img_data[i] = color;

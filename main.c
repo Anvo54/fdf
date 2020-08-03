@@ -28,7 +28,7 @@ void			fromat_data(t_mlx_data *data, t_map *kartta)
 	data->zoom = 1;
 	data->translate_x = data->width / 2;
 	data->translate_y = data->height / 2;
-	data->z_height = 1;
+	data->z_height = 10;
 	data->rotate_x = 0;
 	data->rotate_y = 0;
 	data->rotate_z = 0;

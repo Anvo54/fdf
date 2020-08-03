@@ -1,36 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avornane <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/06/08 15:33:12 by avornane          #+#    #+#             */
+/*   Updated: 2020/06/08 16:57:53 by avornane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FDF_H
 # define FDF_H
 # define BUFFER 4096
+# include "mlx.h"
+# include <stdlib.h>
+# include <math.h>
+# include "libft/libft.h"
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
-typedef					enum
+typedef	enum
 {
 	isometric,
 	cartesian,
-}						projection_t;
+}	t_projection;
 
-typedef struct			coords_s
+typedef struct			s_coords
 {
 	int					x;
 	int					y;
 	int					z;
 	int					color;
-}						coords_t;
+}						t_coords;
 
-typedef struct			map_s
+typedef struct			s_map
 {
 	int					width;
 	int					height;
-	coords_t			**coords;
-}						map_t;
+	t_coords			**coords;
+}						t_map;
 
-typedef struct			mlx_data_s
+typedef struct			s_mlx_data
 {
 	void				*mlx_ptr;
 	void				*mlx_win;
 	void				*img_ptr;
 	char				*img_data;
-	map_t				*map;
-	projection_t		project;
+	t_map				*map;
+	t_projection		project;
 	int					height;
 	int					width;
 	int					bpp;
@@ -45,9 +64,9 @@ typedef struct			mlx_data_s
 	double				z_height;
 	int					min;
 	int					max;
-}						mlx_data_t;
+}						t_mlx_data;
 
-typedef struct			line_s
+typedef struct			s_line
 {
 	int					dx;
 	int					sx;
@@ -56,25 +75,21 @@ typedef struct			line_s
 	int					error;
 	int					e2;
 	int					color;
-}						line_t;
+}						t_line;
 
-#include	"mlx.h"
-#include	<stdlib.h>
-#include	<math.h>
-#include	"libft/libft.h"
-#include	<sys/types.h>
-#include	<sys/stat.h>
-#include	<fcntl.h>  
-// For debug //
-#include <stdio.h>
-
-int			deal_key(int key, mlx_data_t *data);
-void		draw(coords_t p1, coords_t p2, mlx_data_t *data);
-int			print_map(map_t *map, mlx_data_t data);
-coords_t	**read_coords(int fd, int *maxX, int *maxY, mlx_data_t *data);
-map_t		*create_map(int fd, mlx_data_t *data);
-double		percent(int start, int end, int current);
-int			get_light(int start, int end, double percentage);
-int			point_color(int minz, int maxz, int curz);
-int			get_color(coords_t current, coords_t start, coords_t end, line_t delta);
+int						deal_key(int key, t_mlx_data *data);
+void					draw(t_coords p1, t_coords p2, t_mlx_data *data);
+int						print_map(t_map *map, t_mlx_data data);
+t_coords				**read_coords(int fd, int *max_x, int *max_y,
+	t_mlx_data *data);
+t_map					*create_map(int fd, t_mlx_data *data);
+double					percent(int start, int end, int current);
+int						get_light(int start, int end, double percentage);
+int						point_color(int minz, int maxz, int curz);
+int						get_color(t_coords cur, t_coords start,
+	t_coords end, t_line del);
+void					iso(int *x, int *y, int z);
+void					rotate_x(int x, int *y, int *z, t_mlx_data *data);
+void					rotate_z(int *x, int *y, int z, t_mlx_data *data);
+void					rotate_y(int *x, int y, int *z, t_mlx_data *data);
 #endif

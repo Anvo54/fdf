@@ -1,26 +1,40 @@
-#include	"../fdf.h"
-#include	"../libft/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   readmap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avornane <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/03 15:33:12 by avornane          #+#    #+#             */
+/*   Updated: 2020/08/03 16:57:53 by avornane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	get_z_value(coords_t *coord, char *val, mlx_data_t *data)
+#include "../fdf.h"
+#include "../libft/libft.h"
+
+void			get_z_value(t_coords *coord, char *val, t_mlx_data *data)
 {
-	char **str = ft_strsplit(val, ',');
+	char		**str;
+
+	str = ft_strsplit(val, ',');
 	coord->z = ft_atoi(str[0]);
-	coord->color = (str[1]) ? ft_hextoint(str[1]): -1;
+	coord->color = (str[1]) ? ft_hextoint(str[1]) : -1;
 	data->min = (data->min > coord->z) ? coord->z : data->min;
 	data->max = (data->max < coord->z) ? coord->z : data->max;
 }
 
-coords_t *convert_to_coords(char **line, int y, mlx_data_t *data)
+t_coords		*convert(char **line, int y, t_mlx_data *data)
 {
-	int i;
-	int j;
-	coords_t *map_line;
+	int			i;
+	int			j;
+	t_coords	*map_line;
 
 	i = 0;
 	j = 0;
 	while (line[i])
 		i++;
-	map_line = (coords_t*)malloc(i * sizeof(coords_t));
+	map_line = (t_coords*)malloc(i * sizeof(t_coords));
 	while (j < i)
 	{
 		map_line[j].y = y * 10;
@@ -29,30 +43,30 @@ coords_t *convert_to_coords(char **line, int y, mlx_data_t *data)
 		j++;
 	}
 	free(line);
-	return(map_line);
+	return (map_line);
 }
 
-coords_t		**read_coords(int fd, int *maxX, int *maxY, mlx_data_t *data)
+t_coords		**read_coords(int fd, int *max_x, int *max_y, t_mlx_data *data)
 {
-	coords_t **map;
-	char **charmap;
-	int y;
-	int i;
+	t_coords	**map;
+	char		**charmap;
+	int			y;
+	int			i;
 
 	y = 0;
 	i = 0;
-	charmap = (char**)malloc(sizeof(char*) *BUFFER);
+	charmap = (char**)malloc(sizeof(char*) * BUFFER);
 	while (get_next_line(fd, &charmap[y]))
 		y++;
-	*maxY = y;
-	*maxX = ft_count_char(charmap[0],' ');
-	map = (coords_t**)malloc(y * sizeof(coords_t*));
-	while(i < y)
+	*max_y = y;
+	*max_x = ft_count_char(ft_strtrim(charmap[0]), ' ');
+	map = (t_coords**)malloc(y * sizeof(t_coords*));
+	while (i < y)
 	{
-		map[i] = convert_to_coords(ft_strsplit(charmap[i], ' '), i - ((y - 1) / 2), data);
+		map[i] = convert(ft_strsplit(charmap[i], ' '), i - ((y - 1) / 2), data);
 		free(charmap[i]);
 		i++;
 	}
 	free(charmap);
-	return(map);
+	return (map);
 }

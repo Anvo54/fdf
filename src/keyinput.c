@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   keyinput.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avornane <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/03 15:33:12 by avornane          #+#    #+#             */
+/*   Updated: 2020/08/03 16:57:53 by avornane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../fdf.h"
 
-void empty_image(mlx_data_t *data)
+void	empty_image(t_mlx_data *data)
 {
 	ft_bzero(data->img_data, data->width * data->height * 4);
 }
 
-void zoom(mlx_data_t *data, int key)
+void	zoom(t_mlx_data *data, int key)
 {
 	if (key == 120)
 		data->zoom *= 1.2;
@@ -13,7 +25,7 @@ void zoom(mlx_data_t *data, int key)
 		data->zoom *= 0.8;
 }
 
-void	rotate_map(mlx_data_t *data, int key)
+void	rotate_map(t_mlx_data *data, int key)
 {
 	if (key == 65362)
 		data->rotate_x -= 0.05;
@@ -29,9 +41,9 @@ void	rotate_map(mlx_data_t *data, int key)
 		data->rotate_z -= 0.05;
 }
 
-void translate(mlx_data_t *data, int key)
+void	translate(t_mlx_data *data, int key)
 {
-	int val;
+	int	val;
 
 	if (key == 100 || key == 115)
 		val = 10;
@@ -43,54 +55,30 @@ void translate(mlx_data_t *data, int key)
 		data->translate_y += val;
 }
 
-int		deal_key(int key, mlx_data_t *data)
+int		deal_key(int key, t_mlx_data *data)
 {
-	ft_putnbr(key);
-	write(1, "\n", 1);
 	if (key == 65307 || key == 53)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->mlx_win);
 		exit(0);
 	}
 	if (key == 65451 || key == 65453 || key == 120 || key == 122)
-	{
-		if (key == 65451 || key == 120 || key == 122)
-			zoom(data, key);
-		empty_image(data);
-		print_map(data->map, *data);
-	}
+		zoom(data, key);
 	if (key == 100 || key == 97 || key == 115 || key == 119)
-	{
 		translate(data, key);
-		empty_image(data);
-		print_map(data->map, *data);
-	}
-
-	if (key == 113){
-		if (data->project != isometric)
-		{
-			data->project = isometric;
-			empty_image(data);
-			print_map(data->map, *data);
-		} else {
-			data->project = cartesian;
-			empty_image(data);
-			print_map(data->map, *data);
-		}
-	}
-
-	if (key == 114 || key == 101)
+	if (key == 113)
 	{
-		data->z_height += (key == 101) ? -1.2 : 1.2;
-		empty_image(data);
-		print_map(data->map, *data);
+		if (data->project != isometric)
+			data->project = isometric;
+		else
+			data->project = cartesian;
 	}
+	if (key == 114 || key == 101)
+		data->z_height += (key == 101) ? -1.2 : 1.2;
 	if (key == 65362 || key == 65364 || key == 65361 || key == 65363
 	|| key == 44 || key == 46)
-	{
 		rotate_map(data, key);
-		empty_image(data);
-		print_map(data->map, *data);
-	}
-	return(1);
+	empty_image(data);
+	print_map(data->map, *data);
+	return (1);
 }

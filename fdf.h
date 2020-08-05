@@ -89,7 +89,7 @@ int						point_color(int minz, int maxz, int curz);
 int						get_color(t_coords cur, t_coords start,
 	t_coords end, t_line del);
 void					iso(int *x, int *y, int z);
-void					rotate_x(int x, int *y, int *z, t_mlx_data *data);
-void					rotate_z(int *x, int *y, int z, t_mlx_data *data);
-void					rotate_y(int *x, int y, int *z, t_mlx_data *data);
+void					rotate_x(int *y, int *z, t_mlx_data *data);
+void					rotate_z(int *x, int *y, t_mlx_data *data);
+void					rotate_y(int *x, int *z, t_mlx_data *data);
 #endif

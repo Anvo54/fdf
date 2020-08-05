@@ -41,12 +41,15 @@ int				main(int argc, char **argv)
 	t_map		*kartta;
 	int			fd;
 
-	fd = open(argv[1], O_RDONLY);
-	kartta = create_map(fd, &data);
-	fromat_data(&data, kartta);
-	close(fd);
-	mlx_key_hook(data.mlx_win, deal_key, &data);
-	print_map(data.map, data);
-	mlx_loop(data.mlx_ptr);
+	if (argc == 2)
+	{
+		fd = open(argv[1], O_RDONLY);
+		kartta = create_map(fd, &data);
+		fromat_data(&data, kartta);
+		close(fd);
+		mlx_key_hook(data.mlx_win, deal_key, &data);
+		print_map(data.map, data);
+		mlx_loop(data.mlx_ptr);
+	}
 	return (0);
 }

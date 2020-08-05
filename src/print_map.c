@@ -24,9 +24,9 @@ t_coords		render(t_coords *point, t_mlx_data *data, t_coords cord)
 	point->x *= data->zoom;
 	point->y *= data->zoom;
 	point->z *= data->zoom * data->z_height;
-	rotate_x(point->x, &point->y, &point->z, data);
-	rotate_y(&point->x, point->y, &point->z, data);
-	rotate_z(&point->x, &point->y, point->z, data);
+	rotate_x(&point->y, &point->z, data);
+	rotate_y(&point->x, &point->z, data);
+	rotate_z(&point->x, &point->y, data);
 	if (data->project == isometric)
 		iso(&point->x, &point->y, point->z);
 	point->x += data->translate_x;

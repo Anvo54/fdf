@@ -23,7 +23,7 @@ void			iso(int *x, int *y, int z)
 	*y = -z + (previous_x + previous_y) * sin(0.523599);
 }
 
-void			rotate_x(int x, int *y, int *z, t_mlx_data *data)
+void			rotate_x(int *y, int *z, t_mlx_data *data)
 {
 	int			previous_y;
 	int			previous_z;
@@ -34,7 +34,7 @@ void			rotate_x(int x, int *y, int *z, t_mlx_data *data)
 	*z = -previous_y * sin(data->rotate_x) + previous_z * cos(data->rotate_x);
 }
 
-void			rotate_z(int *x, int *y, int z, t_mlx_data *data)
+void			rotate_z(int *x, int *y, t_mlx_data *data)
 {
 	int			previous_x;
 	int			previous_y;
@@ -45,7 +45,7 @@ void			rotate_z(int *x, int *y, int z, t_mlx_data *data)
 	*y = previous_x * sin(data->rotate_z) + previous_y * cos(data->rotate_z);
 }
 
-void			rotate_y(int *x, int y, int *z, t_mlx_data *data)
+void			rotate_y(int *x, int *z, t_mlx_data *data)
 {
 	int	previous_x;
 

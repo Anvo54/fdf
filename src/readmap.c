@@ -16,7 +16,7 @@
 void			get_z_value(t_coords *coord, char *val, t_mlx_data *data)
 {
 	char		**str;
-	int 		i;
+	int			i;
 
 	i = 0;
 	str = ft_strsplit(val, ',');

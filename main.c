@@ -14,8 +14,8 @@
 
 void			fromat_data(t_mlx_data *data, t_map *kartta)
 {
-	data->width = 1920;
-	data->height = 1080;
+	data->width = 800;
+	data->height = 600;
 	if ((data->mlx_ptr = mlx_init()) == (void *)0)
 		exit(0);
 	if ((data->mlx_win = mlx_new_window(data->mlx_ptr, data->width,
@@ -25,10 +25,10 @@ void			fromat_data(t_mlx_data *data, t_map *kartta)
 	data->img_ptr = mlx_new_image(data->mlx_ptr, data->width, data->height);
 	data->img_data = mlx_get_data_addr(data->img_ptr, &(data->bpp),
 		&(data->size_line), &(data->endian));
-	data->zoom = 1;
+	data->zoom = 2;
 	data->translate_x = data->width / 2;
 	data->translate_y = data->height / 2;
-	data->z_height = 10;
+	data->z_height = 2;
 	data->rotate_x = 0;
 	data->rotate_y = 0;
 	data->rotate_z = 0;

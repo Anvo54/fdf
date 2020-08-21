@@ -12,6 +12,30 @@
 
 #include "../fdf.h"
 
+void			perspect(t_coords *out)
+{
+	float		near;
+	float		far;
+	t_coords	*in;
+	float		scale;
+	float		w;
+
+	far = 90;
+	near = 1;
+	scale = 1 / tan(60 * 0.5 * M_PI / 180);
+	in = out;
+	out->x += in->x * scale;
+	out->y += in->y * scale;
+	out->z += (in->z -= 10000) * -far / (far - near);
+	w = in->z * 1;
+	if (w != 1)
+	{
+		out->x /= w;
+		out->y /= w;
+		out->z /= w;
+	}
+}
+
 t_coords		render(t_coords *point, t_mlx_data *data, t_coords cord)
 {
 	point->x = cord.x;
@@ -21,14 +45,17 @@ t_coords		render(t_coords *point, t_mlx_data *data, t_coords cord)
 		point->color = point_color(data->min, data->max, point->z);
 	else
 		point->color = cord.color;
-	point->x *= data->zoom;
-	point->y *= data->zoom;
-	point->z *= data->zoom * data->z_height;
+	point->x *= (data->project == perspective) ? data->zoom * 40 : data->zoom;
+	point->y *= (data->project == perspective) ? data->zoom * 40 : data->zoom;
+	point->z *= (data->project == perspective) ? data->zoom * data->z_height
+		* 40 : data->zoom * data->z_height;
 	rotate_x(&point->y, &point->z, data);
 	rotate_y(&point->x, &point->z, data);
 	rotate_z(&point->x, &point->y, data);
 	if (data->project == isometric)
 		iso(&point->x, &point->y, point->z);
+	if (data->project == perspective)
+		perspect(point);
 	point->x += data->translate_x;
 	point->y += data->translate_y;
 	return (*point);

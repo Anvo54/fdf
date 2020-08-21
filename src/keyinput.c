@@ -71,7 +71,7 @@ int		deal_key(int key, t_mlx_data *data)
 		if (data->project != isometric)
 			data->project = isometric;
 		else
-			data->project = cartesian;
+			data->project = perspective;
 	}
 	if (key == 114 || key == 101)
 		data->z_height += (key == 101) ? -1.2 : 1.2;

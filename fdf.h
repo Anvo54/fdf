@@ -25,6 +25,7 @@ typedef	enum
 {
 	isometric,
 	cartesian,
+	perspective,
 }	t_projection;
 
 typedef struct			s_coords

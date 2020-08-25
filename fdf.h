@@ -93,4 +93,5 @@ void					iso(int *x, int *y, int z);
 void					rotate_x(int *y, int *z, t_mlx_data *data);
 void					rotate_z(int *x, int *y, t_mlx_data *data);
 void					rotate_y(int *x, int *z, t_mlx_data *data);
+void					perspect(t_coords *out);
 #endif

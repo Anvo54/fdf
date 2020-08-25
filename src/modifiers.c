@@ -53,3 +53,27 @@ void			rotate_y(int *x, int *z, t_mlx_data *data)
 	*x = previous_x * cos(data->rotate_y) + *z * sin(data->rotate_y);
 	*z = -previous_x * sin(data->rotate_y) + *z * cos(data->rotate_y);
 }
+
+void			perspect(t_coords *out)
+{
+	float		near;
+	float		far;
+	float		scale;
+	float		w;
+	t_coords	*in;
+
+	far = 90;
+	near = 1.2;
+	scale = 1 / tan(35 * 0.5 * M_PI / 180);
+	in = out;
+	out->x += in->x * scale;
+	out->y += in->y * scale;
+	out->z += (in->z -= 10000) * -far / (far - near);
+	w = in->z;
+	if (w >= near)
+	{
+		out->x /= w;
+		out->y /= w;
+		out->z /= w;
+	}
+}

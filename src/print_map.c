@@ -12,30 +12,6 @@
 
 #include "../fdf.h"
 
-void			perspect(t_coords *out)
-{
-	float		near;
-	float		far;
-	t_coords	*in;
-	float		scale;
-	float		w;
-
-	far = 90;
-	near = 1;
-	scale = 1 / tan(60 * 0.5 * M_PI / 180);
-	in = out;
-	out->x += in->x * scale;
-	out->y += in->y * scale;
-	out->z += (in->z -= 10000) * -far / (far - near);
-	w = in->z * 1;
-	if (w != 1)
-	{
-		out->x /= w;
-		out->y /= w;
-		out->z /= w;
-	}
-}
-
 t_coords		render(t_coords *point, t_mlx_data *data, t_coords cord)
 {
 	point->x = cord.x;

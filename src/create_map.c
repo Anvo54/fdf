@@ -14,15 +14,9 @@
 
 t_map			*create_map(int fd, t_mlx_data *data)
 {
-	int			max_x;
-	int			max_y;
 	t_map		*kartta;
-	t_coords	**coords;
 
 	kartta = (t_map*)ft_memalloc(sizeof(t_map));
-	coords = read_coords(fd, &max_x, &max_y, data);
-	kartta->coords = coords;
-	kartta->height = max_y - 1;
-	kartta->width = max_x;
+	read_coords(fd, data, kartta);
 	return (kartta);
 }

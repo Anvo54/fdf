@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void			fromat_data(t_mlx_data *data, t_map *kartta)
+void			format_data(t_mlx_data *data, t_map *coords)
 {
 	data->width = 800;
 	data->height = 600;
@@ -28,24 +28,28 @@ void			fromat_data(t_mlx_data *data, t_map *kartta)
 	data->zoom = 2;
 	data->translate_x = data->width / 2;
 	data->translate_y = data->height / 2;
-	data->z_height = 2;
+	data->z_height = 1;
 	data->rotate_x = 0;
 	data->rotate_y = 0;
 	data->rotate_z = 0;
-	data->map = kartta;
+	data->map = coords;
 }
 
 int				main(int argc, char **argv)
 {
 	t_mlx_data	data;
-	t_map		*kartta;
+	t_map		*coords;
 	int			fd;
 
 	if (argc == 2)
 	{
-		fd = open(argv[1], O_RDONLY);
-		kartta = create_map(fd, &data);
-		fromat_data(&data, kartta);
+		if ((fd = open(argv[1], O_RDWR)) < 1)
+		{
+			ft_putstr("Invalid file\n");
+			exit(0);
+		}
+		coords = create_map(fd, &data);
+		format_data(&data, coords);
 		close(fd);
 		mlx_key_hook(data.mlx_win, deal_key, &data);
 		print_map(data.map, data);

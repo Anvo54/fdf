@@ -66,13 +66,12 @@ int		deal_key(int key, t_mlx_data *data)
 		zoom(data, key);
 	if (key == 100 || key == 97 || key == 115 || key == 119)
 		translate(data, key);
-	if (key == 113)
-	{
-		if (data->project != isometric)
-			data->project = isometric;
-		else
-			data->project = perspective;
-	}
+	if (key == 49)
+		data->project = isometric;
+	if (key == 50)
+		data->project = perspective;
+	if (key == 51)
+		data->project = cartesian;
 	if (key == 114 || key == 101)
 		data->z_height += (key == 101) ? -1.2 : 1.2;
 	if (key == 65362 || key == 65364 || key == 65361 || key == 65363

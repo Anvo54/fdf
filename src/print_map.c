@@ -21,10 +21,10 @@ t_coords		render(t_coords *point, t_mlx_data *data, t_coords cord)
 		point->color = point_color(data->min, data->max, point->z);
 	else
 		point->color = cord.color;
-	point->x *= (data->project == perspective) ? data->zoom * 40 : data->zoom;
-	point->y *= (data->project == perspective) ? data->zoom * 40 : data->zoom;
+	point->x *= (data->project == perspective) ? data->zoom * 33 : data->zoom;
+	point->y *= (data->project == perspective) ? data->zoom * 33 : data->zoom;
 	point->z *= (data->project == perspective) ? data->zoom * data->z_height
-		* 40 : data->zoom * data->z_height;
+		* 33 : data->zoom * data->z_height;
 	rotate_x(&point->y, &point->z, data);
 	rotate_y(&point->x, &point->z, data);
 	rotate_z(&point->x, &point->y, data);

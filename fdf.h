@@ -13,6 +13,7 @@
 #ifndef FDF_H
 # define FDF_H
 # define BUFFER 4096
+# define INIT_ZOOM 10
 # include "mlx.h"
 # include <stdlib.h>
 # include <math.h>
@@ -58,7 +59,7 @@ typedef struct			s_mlx_data
 	int					endian;
 	double				zoom;
 	double				translate_x;
-	int					translate_y;
+	double				translate_y;
 	double				rotate_x;
 	double				rotate_y;
 	double				rotate_z;
@@ -81,11 +82,10 @@ typedef struct			s_line
 int						deal_key(int key, t_mlx_data *data);
 void					draw(t_coords p1, t_coords p2, t_mlx_data *data);
 int						print_map(t_map *map, t_mlx_data data);
-t_coords				**read_coords(int fd, int *max_x, int *max_y,
-	t_mlx_data *data);
+void					read_coords(int fd, t_mlx_data *data, t_map *map);
 t_map					*create_map(int fd, t_mlx_data *data);
 double					percent(int start, int end, int current);
-int						get_light(int start, int end, double percentage);
+int						shade(int start, int end, double percentage);
 int						point_color(int minz, int maxz, int curz);
 int						get_color(t_coords cur, t_coords start,
 	t_coords end, t_line del);

@@ -20,6 +20,11 @@ void			get_z_value(t_coords *coord, char *val, t_mlx_data *data)
 
 	i = 0;
 	str = ft_strsplit(val, ',');
+	if (ft_atoi(str[0]) < -2147483647 || ft_atoi(str[0]) > 2147483647)
+	{
+		ft_putstr("Invalid map!\n");
+		exit(0);
+	}
 	coord->z = ft_atoi(str[0]);
 	coord->color = (str[1]) ? ft_hextoint(str[1]) : -1;
 	data->min = (data->min > coord->z) ? coord->z : data->min;
@@ -32,7 +37,7 @@ void			get_z_value(t_coords *coord, char *val, t_mlx_data *data)
 	free(str);
 }
 
-t_coords		*convert(char **line, int y, t_mlx_data *data)
+t_coords		*convert_to_coords(char **line, int y, int x, t_mlx_data *data)
 {
 	int			i;
 	int			j;
@@ -42,11 +47,16 @@ t_coords		*convert(char **line, int y, t_mlx_data *data)
 	j = 0;
 	while (line[i])
 		i++;
+	if (i - 1 != x)
+	{
+		ft_putstr("Invalid map!\n");
+		exit(0);
+	}
 	map_line = (t_coords*)malloc(i * sizeof(t_coords));
 	while (j < i)
 	{
-		map_line[j].y = y * 10;
-		map_line[j].x = (j - ((i - 1) / 2)) * 10;
+		map_line[j].y = y * INIT_ZOOM;
+		map_line[j].x = (j - ((i - 1) / 2)) * INIT_ZOOM;
 		get_z_value(&map_line[j], line[j], data);
 		free(line[j]);
 		j++;
@@ -55,9 +65,8 @@ t_coords		*convert(char **line, int y, t_mlx_data *data)
 	return (map_line);
 }
 
-t_coords		**read_coords(int fd, int *max_x, int *max_y, t_mlx_data *data)
+void			read_coords(int fd, t_mlx_data *data, t_map *map)
 {
-	t_coords	**map;
 	char		**charmap;
 	char		*count;
 	int			y;
@@ -68,17 +77,19 @@ t_coords		**read_coords(int fd, int *max_x, int *max_y, t_mlx_data *data)
 	charmap = (char**)malloc(sizeof(char*) * BUFFER);
 	while (get_next_line(fd, &charmap[y]))
 		y++;
-	*max_y = y;
+	(y < 2) ? ft_putstr("Invalid file!\n") : 0;
+	(y < 2) ? exit(0) : 0;
+	map->height = y - 1;
 	count = ft_strtrim(charmap[0]);
-	*max_x = ft_count_char(count, ' ');
+	map->width = ft_count_char(count, ' ');
 	free(count);
-	map = (t_coords**)malloc(y * sizeof(t_coords*));
+	map->coords = (t_coords**)malloc(y * sizeof(t_coords*));
 	while (i < y)
 	{
-		map[i] = convert(ft_strsplit(charmap[i], ' '), i - ((y - 1) / 2), data);
+		map->coords[i] = convert_to_coords(ft_strsplit(charmap[i], ' '),
+			i - ((y - 1) / 2), map->width, data);
 		free(charmap[i]);
 		i++;
 	}
 	free(charmap);
-	return (map);
 }
